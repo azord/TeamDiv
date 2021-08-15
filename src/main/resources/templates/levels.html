@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+
+    <title>Выберите уровень игроков</title>
+</head>
+<header th:insert="blocks/header::header"> </header>
+<body>
+
+<div align="center">
+    <form method="post" action="/display">
+        <p>
+<table border-collapse="separate"; border-spacing="1em" id="todays-table">
+    <tr th:each="player : ${players}">
+        <td th:text="${player}" style="padding-right: 10vw;"></td>
+        <td style="margin-left: 20px">
+            <select name="level">
+                <option value="1" text="Неизвестный">Неизвестный</option>
+                <option value="1" text="Средний">Средний</option>
+                <option value="2" text="Хороший">Хороший</option>
+                <option value="3" text="Очень хороший">Очень хороший</option>
+            </select>
+        </td>
+    </tr>
+</table>
+        </p>
+        <p>
+            <button type="submit" class="btn btn-success">Вывести результат</button>
+        </p>
+    </form>
+</div>
+<div th:insert="blocks/footer::footer"></div>
+</body>
+</html>
