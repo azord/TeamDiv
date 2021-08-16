@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <title>Выберите уровень игроков</title>
+</head>
+<header th:insert="blocks/header::header"> </header>
+<body>
+<div align="center">
+        <h1>Команды:</h1>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5" style="margin-left: 200px">
+
+        <div class="col d-flex align-items-start" th:each="team,iter : ${finalTeams}">
+            <div>
+                <h4 class="fw-bold mb-0" th:text="'Команда ' + ${iter.index+1} + ':'"></h4>
+                <ol>
+                <li th:each="player : ${team}" th:text="${player}"></li>
+                </ol>
+            </div>
+        </div>
+        </div>
+    </div>
+
+<div th:insert="blocks/footer::footer"></div>
+</body>
+</html>
