@@ -1,3 +1,8 @@
+table {
+    border-collapse: separate;
+    border-spacing: 0 1em;
+}
+
 ol {
     display: block;
     list-style-type: decimal;
