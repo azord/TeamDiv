@@ -2,6 +2,8 @@ package com.example.soccerrandomizer.Controller;
 
 import com.example.soccerrandomizer.Model.Post;
 import org.springframework.aop.scope.ScopedProxyUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import javax.servlet.ServletContext;
 import javax.swing.plaf.IconUIResource;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -25,7 +33,8 @@ public class MainController {
     public String home(Model model) {
         model.addAttribute("title", "Sport Teams Randomizer");
         LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println(localDateTime);
+
+        write(toString(localDateTime));
         return "home";
     }
 
@@ -43,12 +52,41 @@ public class MainController {
         return "levels";
     }
 
+    public void write(String message)  {
+
+        String absPath = new FileSystemResource("").getFile().getAbsolutePath();
+        message += "\n";
+        try {
+            Files.write(Paths.get(absPath + "\\visit.txt"), message.getBytes(), StandardOpenOption.APPEND);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void recordPlayers() {
+        String absPath = new FileSystemResource("").getFile().getAbsolutePath();
+        if (this.common != null && this.levels != null) {
+            for (int i = 0; i < this.common.length; i++) {
+                String message = this.common[i] + "-> " + this.levels[i] + "\n";
+                try {
+                Files.write(Paths.get(absPath + "\\visit.txt"), message.getBytes(), StandardOpenOption.APPEND);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
     @PostMapping("/display")
     public String display(Model model, @RequestParam(required = false) Integer [] level) {
         if (level.length == 0) {
             level = this.levels;
         } else {
             this.levels = level;
+            recordPlayers();
         }
 
         List<String> level1 = new ArrayList<>();
@@ -140,5 +178,9 @@ public class MainController {
         return "display";
     }
 
+
+    public String toString(LocalDateTime localDateTime) {
+        return String.format(localDateTime + " ");
+    }
 
 }
