@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import javax.swing.plaf.IconUIResource;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.lang.Object;
 
@@ -21,6 +24,8 @@ public class MainController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("title", "Sport Teams Randomizer");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        System.out.println(localDateTime);
         return "home";
     }
 
