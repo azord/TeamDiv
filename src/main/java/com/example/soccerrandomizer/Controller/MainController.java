@@ -143,35 +143,6 @@ public class MainController {
             }
         }
 
-
-        /*
-        PriorityQueue<Map.Entry<String, Integer>> maxPQ = new PriorityQueue<>(
-                (a,b) -> a.getValue()==b.getValue() ? b.getKey().compareTo(a.getKey()) : a.getValue()-b.getValue()
-        );
-
-        for (int i = 0; i < level.length; i++) {
-            maxPQ.add(new AbstractMap.SimpleEntry<String, Integer>(common[i], level[i]));
-        }
-
-
-
-        for(int i = 0; i < teams; i++)  {
-            finalTeams.add(new ArrayList<String>());
-        }
-        int i = 0;
-        while (!maxPQ.isEmpty()) {
-            finalTeams.get(i).add(maxPQ.peek().getKey());
-            maxPQ.poll();
-            i++;
-            if (i == teams) {
-                i = 0;
-            }
-        }
-
-         */
-
-
-
         model.addAttribute("finalTeams", finalTeams);
         model.addAttribute("level", level);
 
