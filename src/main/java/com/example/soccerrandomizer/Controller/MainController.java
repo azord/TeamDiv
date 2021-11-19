@@ -31,11 +31,26 @@ public class MainController {
         return "home";
     }
 
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
+
+    @PostMapping("/checkPassword")
+    public String checkPassword(@RequestParam String username, @RequestParam String password) {
+        Person p = personRepository.findDistinctByUsername(username);
+
+        if (password.equals(p.getUser_password())) {
+            return "home";
+        }
+
+        return "login";
+    }
 
     @PostMapping("/registered")
     public String registered(Model model, @RequestParam String username, @RequestParam String email, @RequestParam String password)
     {
-        personRepository.save(new Person(username, email, password));
+        personRepository.save(new Person(username, password, email));
         return "registered";
     }
 
