@@ -1,7 +1,7 @@
 package com.example.soccerrandomizer.Controller;
 
-import com.example.soccerrandomizer.Model.Post;
-import org.springframework.aop.scope.ScopedProxyUtils;
+import com.example.soccerrandomizer.db.Person;
+import com.example.soccerrandomizer.repos.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
@@ -11,31 +11,39 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-import javax.servlet.ServletContext;
-import javax.swing.plaf.IconUIResource;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.*;
-import java.lang.Object;
 
 @Controller
 public class MainController {
     private String[]common;
     private int teams;
     private Integer[]levels;
+    @Autowired
+    private PersonRepository personRepository;
+
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("title", "Sport Teams Randomizer");
-        LocalDateTime localDateTime = LocalDateTime.now();
-
-        write(toString(localDateTime));
         return "home";
+    }
+
+
+    @PostMapping("/registered")
+    public String registered(Model model, @RequestParam String username, @RequestParam String email, @RequestParam String password)
+    {
+        personRepository.save(new Person(username, email, password));
+        return "registered";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("title", "Register user");
+
+        return "register";
     }
 
     @PostMapping("/levels")
@@ -48,9 +56,9 @@ public class MainController {
             this.teams = teams;
         }
         model.addAttribute("players", common);
-
         return "levels";
     }
+
 
     public void write(String message)  {
 
@@ -58,8 +66,6 @@ public class MainController {
         message += "\n";
         try {
             Files.write(Paths.get(absPath + "\\visit.txt"), message.getBytes(), StandardOpenOption.APPEND);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,12 +88,7 @@ public class MainController {
 
     @PostMapping("/display")
     public String display(Model model, @RequestParam(required = false) Integer [] level) {
-        if (level.length == 0) {
-            level = this.levels;
-        } else {
-            this.levels = level;
-            recordPlayers();
-        }
+
 
         List<String> level1 = new ArrayList<>();
         List<String> level2 = new ArrayList<>();

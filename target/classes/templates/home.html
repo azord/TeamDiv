@@ -33,8 +33,18 @@
         </div>
         </div>
     </form>
-
 </div>
+
+<div>
+    <table border-collapse="separate"; border-spacing="1em" id="todays-table">
+        <tr th:each="player : ${players}">
+            <td th:text="${player}" style="padding-right: 10vw;"></td>
+            <td style="margin-left: 20px">
+
+            </td>
+        </tr>
+    </table>
+    </div>
 
 
 <div th:insert="blocks/footer::footer"></div>

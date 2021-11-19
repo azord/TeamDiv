@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+  <title th:text="${title}"></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/css/Layout.css}">
+</head>
+<body>
+<header th:insert="blocks/header::header"> </header>
+
+<div layout:fragment="content" align="center">
+  <h1>Регистрация пользователя</h1>
+
+  <form class="form-horizontal" th:action="@{/registered}" method="POST">
+
+
+      <div class="control-group">
+        <!-- Username -->
+        <label class="control-label" for="username">Логин</label>
+        <div class="controls">
+          <input type="text" id="username" name="username" placeholder="" class="input-xlarge" required="required">
+          <p class="help-block">Логин может состоять только из цифр и букв</p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- E-mail -->
+        <label class="control-label" for="email">E-mail</label>
+        <div class="controls">
+          <input type="email" id="email" name="email" placeholder="" class="input-xlarge" required="required">
+          <p class="help-block">Email: </p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- Password-->
+        <label class="control-label" for="password">Пароль</label>
+        <div class="controls">
+          <input type="password" id="password" name="password" placeholder="" class="input-xlarge" required="required">
+          <p class="help-block">Минимум 4 знака</p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- Password -->
+        <label class="control-label" for="password_confirm">Повторите Пароль</label>
+        <div class="controls">
+          <input type="password" id="password_confirm" name="passwordConfirmation" placeholder="" class="input-xlarge"
+                 required="required">
+          <p class="help-block">Подтвердите пароль</p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <!-- Button -->
+        <div class="controls">
+          <button class="btn btn-success">Зарегистрироваться</button>
+        </div>
+      </div>
+  </form>
+
+</div>
+
+
+
+<div th:insert="blocks/footer::footer"></div>
+</body>
+</html>
